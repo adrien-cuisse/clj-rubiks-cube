@@ -1,5 +1,5 @@
 (ns rubiks-cube.core
-  (:require [clojure.set :as set]))
+  (:require [clojure.set :refer [rename-keys]]))
 
 (def blue \b)
 (def green \g)
@@ -68,7 +68,7 @@
 (defn- rotate
   "Rotates the cube on itself"
   [cube faces-cycle]
-  (set/rename-keys
+  (rename-keys
     cube
     (create-faces-switch-map faces-cycle)))
 
