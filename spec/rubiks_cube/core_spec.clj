@@ -5,7 +5,7 @@
 (describe "new cube"
     (let [cube (create-cube)]
         (it "has 6 faces"
-            (should= (count cube) 6))
+            (should= 6 (count cube)))
         (it "has 9 cells on front face"
             (should= 9 (count (front-face cube))))
         (it "has 9 cells on left face"
