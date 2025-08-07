@@ -1,6 +1,13 @@
 (ns rubiks-cube.core
   (:require [clojure.set :as set]))
 
+(def blue \b)
+(def green \g)
+(def orange \o)
+(def red \r)
+(def white \w)
+(def yellow \y)
+
 (defn- create-face
   [color]
   "Creates a face with the specified color"

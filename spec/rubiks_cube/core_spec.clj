@@ -19,17 +19,17 @@
         (it "has 9 cells on back face"
             (should-have-count 9 (back-face cube)))
         (it "has blue face in front"
-            (should= \b (color (front-face cube)))
+            (should= blue (color (front-face cube)))
         (it "has red face on the left"
-            (should= \r (color (left-face cube))))
+            (should= red (color (left-face cube))))
         (it "has orange face on the right"
-            (should= \o (color (right-face cube))))
+            (should= orange (color (right-face cube))))
         (it "has white face on top"
-            (should= \w (color (top-face cube))))
+            (should= white (color (top-face cube))))
         (it "has yellow face at the bottom"
-            (should= \y (color (bottom-face cube))))
+            (should= yellow (color (bottom-face cube))))
         (it "has green face on the back"
-            (should= \g (color (back-face cube)))))))
+            (should= green (color (back-face cube)))))))
 
 (describe "cube left rotation"
     (let [cube (create-cube), rotated-cube (rotate-left cube)]
