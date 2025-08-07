@@ -9,56 +9,56 @@
 (def yellow \y)
 
 (defn- create-face
-  [color]
   "Creates a face with the specified color"
+  [color]
   (repeat 9 color))
 
 (defn color
-  [face]
   "Returns the color of a face"
+  [face]
   (nth face 5)) ; center cell can't move
 
 (defn front-face
-  [cube]
   "Returns the front face of the cube"
+  [cube]
   (:front cube))
 
 (defn left-face
-  [cube]
   "Returns the left face of the cube"
+  [cube]
   (:left cube))
 
 (defn right-face
-  [cube]
   "Returns the right face of the cube"
+  [cube]
   (:right cube))
 
 (defn top-face
-  [cube]
   "Returns the top face of the cube"
+  [cube]
   (:top cube))
 
 (defn bottom-face
-  [cube]
   "Returns the bottom face of the cube"
+  [cube]
   (:bottom cube))
 
 (defn back-face
-  [cube]
   "Returns the back face of the cube"
+  [cube]
   (:back cube))
 
 (defn create-cube
-  []
   "Creates a solved cube"
+  []
   (let [colors {:front \b :left \r :right \o :top \w :bottom \y :back \g}]
     (zipmap
       (keys colors)
       (map #(create-face %) (vals colors)))))
 
 (defn- create-faces-switch-map
-  [faces-cycle]
   "Creates a map where keys are source faces, and values their destination"
+  [faces-cycle]
   (zipmap
     faces-cycle
     (conj
@@ -66,38 +66,38 @@
       (first faces-cycle))))
 
 (defn- rotate
-  [cube faces-cycle]
   "Rotates the cube on itself"
+  [cube faces-cycle]
   (set/rename-keys
     cube
     (create-faces-switch-map faces-cycle)))
 
 (defn rotate-left
-  [cube]
   "Rotates the cube to the left"
+  [cube]
   (rotate cube [:front :left :back :right]))
 
 (defn rotate-right
-  [cube]
   "Rotates the cube to the right"
+  [cube]
   (rotate cube [:front :right :back :left]))
 
 (defn rotate-up
-  [cube]
   "Rotates the cube up"
+  [cube]
   (rotate cube [:front :top :back :bottom]))
 
 (defn rotate-down
-  [cube]
   "Rotates the cube down"
+  [cube]
   (rotate cube [:front :bottom :back :top]))
 
 (defn rotate-clockwise
-  [cube]
   "Rotates the cube clockwise"
+  [cube]
   (rotate cube [:top :right :bottom :left]))
 
 (defn rotate-anticlockwise
-  [cube]
   "Rotates the cube anticlockwise"
+  [cube]
   (rotate cube [:top :left :bottom :right]))
