@@ -8,7 +8,7 @@
 (def white \w)
 (def yellow \y)
 
-(defn- create-face
+(defn- ^:no-doc create-face
   "Creates a face with the specified color"
   [color]
   (repeat 9 color))
@@ -56,7 +56,7 @@
       (keys colors)
       (map #(create-face %) (vals colors)))))
 
-(defn- create-faces-switch-map
+(defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are source faces, and values their destination"
   [faces-cycle]
   (zipmap
@@ -65,7 +65,7 @@
       (vec (rest faces-cycle))
       (first faces-cycle))))
 
-(defn- rotate
+(defn- ^:no-doc rotate
   "Rotates the cube on itself"
   [cube faces-cycle]
   (rename-keys
