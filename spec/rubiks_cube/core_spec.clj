@@ -5,21 +5,21 @@
 (describe "new cube"
     (let [cube (create-cube)]
         (it "has 6 faces"
-            (should= 6 (count cube)))
+            (should-have-count 6 cube))
         (it "has 9 cells on front face"
-            (should= 9 (count (front-face cube))))
+            (should-have-count 9 (front-face cube)))
         (it "has 9 cells on left face"
-            (should= 9 (count (left-face cube))))
+            (should-have-count 9 (left-face cube)))
         (it "has 9 cells on right face"
-            (should= 9 (count (right-face cube))))
+            (should-have-count 9 (right-face cube)))
         (it "has 9 cells on top face"
-            (should= 9 (count (top-face cube))))
+            (should-have-count 9 (top-face cube)))
         (it "has 9 cells on bottom face"
-            (should= 9 (count (bottom-face cube))))
+            (should-have-count 9 (bottom-face cube)))
         (it "has 9 cells on back face"
-            (should= 9 (count (back-face cube))))
+            (should-have-count 9 (back-face cube)))
         (it "has blue face in front"
-            (should= \b (color (front-face cube))))
+            (should= \b (color (front-face cube)))
         (it "has red face on the left"
             (should= \r (color (left-face cube))))
         (it "has orange face on the right"
@@ -29,7 +29,7 @@
         (it "has yellow face at the bottom"
             (should= \y (color (bottom-face cube))))
         (it "has green face on the back"
-            (should= \g (color (back-face cube))))))
+            (should= \g (color (back-face cube)))))))
 
 (describe "cube left rotation"
     (let [cube (create-cube), rotated-cube (rotate-left cube)]
