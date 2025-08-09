@@ -64,6 +64,20 @@
     (keys faces-startup-location)
     (map #(create-face %) (vals faces-startup-location))))
 
+(defn- ^:no-doc rotate-coll-left
+  "Rotates a `collection` once to the left, moving the first element at the end
+  Returns a lazy sequence
+
+  ```clojure
+  (rotate-coll-right [1 2 3]) ; => [2 3 1]
+  ```
+  "
+  [coll]
+  (->>
+    (cycle coll)
+    (drop 1)
+    (take (count coll))))
+
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`
   Values in the map are the provided keys but rotated once to the right
@@ -73,11 +87,7 @@
   ```
   "
   [faces-cycle]
-  (zipmap
-    faces-cycle
-    (conj
-      (vec (rest faces-cycle))
-      (first faces-cycle))))
+  (zipmap faces-cycle (rotate-coll-left faces-cycle)))
 
 (defn- ^:no-doc rotate-cube
   "Rotates the `cube` on itself, the first face will be replaced by the second
