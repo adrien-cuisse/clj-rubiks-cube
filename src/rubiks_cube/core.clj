@@ -167,3 +167,10 @@
           back-face-key red,
           right-face-key green,
           front-face-key orange})))
+
+(defn rotate-top-slice-right
+  [cube]
+  (reduce
+    #(assoc-in %1 [right-face-key %2] blue)
+    cube
+    [0 1 2]))

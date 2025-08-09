@@ -174,3 +174,12 @@
     (should=
       (top-row (right-face @cube))
       (top-row (front-face @rotated-cube)))))
+
+(describe "top slice right rotation"
+  (with cube (create-cube))
+  (with rotated-cube (rotate-top-slice-right @cube))
+
+  (it "moves the front face top row to the right face top row"
+    (should=
+      (top-row (front-face @cube))
+      (top-row (right-face @rotated-cube)))))
