@@ -144,3 +144,14 @@
   "Rotates the `cube` anticlockwise"
   [cube]
   (rotate-cube cube [top-face-key left-face-key bottom-face-key right-face-key]))
+
+(defn top-row
+  [face]
+  (subvec face 0 3))
+
+(defn rotate-top-slice-left
+  [cube]
+  (reduce
+    #(assoc-in %1 [left-face-key %2] blue)
+    cube
+    [0 1 2]))

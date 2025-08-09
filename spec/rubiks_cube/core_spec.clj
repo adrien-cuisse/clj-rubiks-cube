@@ -153,3 +153,12 @@
     (should=
       (color (right-face @cube))
       (color (top-face @rotated-cube)))))
+
+(describe "top slice left rotation"
+  (with cube (create-cube))
+  (with rotated-cube (rotate-top-slice-left @cube))
+
+  (it "moves the front face top row to the left face top row"
+    (should=
+      (top-row (front-face @cube))
+      (top-row (left-face @rotated-cube)))))
