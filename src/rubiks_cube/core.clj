@@ -171,6 +171,6 @@
 (defn rotate-top-slice-right
   [cube]
   (reduce
-    #(assoc-in %1 [right-face-key %2] blue)
+    #(paint-top-row %1 (first %2) (last %2))
     cube
-    [0 1 2]))
+    (seq {right-face-key blue, back-face-key orange})))
