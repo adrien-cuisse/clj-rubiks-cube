@@ -150,7 +150,7 @@
   (subvec face 0 3))
 
 (defn- paint-top-row
-  "Changes the color of the top row to `color`, in the face with key `face-key`"
+  "Changes the color of the top row to `color`, on the face with key `face-key`"
   [cube face-key color]
   (reduce
      #(assoc-in %1 [face-key %2] color)
