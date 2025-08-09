@@ -11,7 +11,7 @@
 (defn- ^:no-doc create-face
   "Creates a face with the specified `color`"
   [color]
-  (repeat 9 color))
+  (vec (repeat 9 color)))
 
 (defn color
   "Returns the color of a `face`"
