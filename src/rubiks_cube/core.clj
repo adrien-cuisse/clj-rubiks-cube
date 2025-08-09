@@ -48,13 +48,21 @@
   [cube]
   (:back cube))
 
+(def ^:private faces-startup-location
+  "Where faces are placed on the cube at creation"
+  {:front blue,
+   :left red,
+   :right orange,
+   :top white,
+   :bottom yellow,
+   :back green})
+
 (defn create-cube
   "Creates a solved cube"
   []
-  (let [colors {:front \b :left \r :right \o :top \w :bottom \y :back \g}]
-    (zipmap
-      (keys colors)
-      (map #(create-face %) (vals colors)))))
+  (zipmap
+    (keys faces-startup-location)
+    (map #(create-face %) (vals faces-startup-location))))
 
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`
