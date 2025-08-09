@@ -16,7 +16,7 @@
 (defn color
   "Returns the color of a `face`"
   [face]
-  (nth face 5)) ; center cell can't move
+  (nth face 4)) ; center cell can't move
 
 (defn front-face
   "Returns the front face of the `cube`"
