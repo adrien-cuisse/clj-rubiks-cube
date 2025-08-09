@@ -25,35 +25,40 @@
   [face]
   (nth face 4)) ; center cell can't move
 
+(defn- ^:no-doc face
+  "Returns a `face` of the `cube` from its `key`"
+  [cube key]
+  (key cube))
+
 (defn front-face
   "Returns the front face of the `cube`"
   [cube]
-  (front-face-key cube))
+  (face cube front-face-key))
 
 (defn left-face
   "Returns the left face of the `cube`"
   [cube]
-  (left-face-key cube))
+  (face cube left-face-key))
 
 (defn right-face
   "Returns the right face of the `cube`"
   [cube]
-  (right-face-key cube))
+  (face cube right-face-key))
 
 (defn top-face
   "Returns the top face of the `cube`"
   [cube]
-  (top-face-key cube))
+  (face cube top-face-key))
 
 (defn bottom-face
   "Returns the bottom face of the `cube`"
   [cube]
-  (bottom-face-key cube))
+  (face cube bottom-face-key))
 
 (defn back-face
   "Returns the back face of the `cube`"
   [cube]
-  (back-face-key cube))
+  (face cube back-face-key))
 
 (def ^:private faces-startup-location
   "Where faces are placed on the cube at creation"
