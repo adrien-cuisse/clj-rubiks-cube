@@ -149,9 +149,14 @@
   [face]
   (subvec face 0 3))
 
+(defn- paint-top-row-blue
+  "Changes the color of the top row to `color`, in the face with key `face-key`"
+  [cube face-key]
+  (reduce
+     #(assoc-in %1 [face-key %2] blue)
+     cube
+     [0 1 2]))
+
 (defn rotate-top-slice-left
   [cube]
-  (reduce
-    #(assoc-in %1 [left-face-key %2] blue)
-    cube
-    [0 1 2]))
+  (paint-top-row-blue cube left-face-key))
