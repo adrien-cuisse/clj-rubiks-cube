@@ -8,6 +8,13 @@
 (def white \w)
 (def yellow \y)
 
+(def ^:private front-face-key :front-face)
+(def ^:private back-face-key :back-face)
+(def ^:private left-face-key :left-face)
+(def ^:private right-face-key :right-face)
+(def ^:private top-face-key :top-face)
+(def ^:private bottom-face-key :bottom-face)
+
 (defn- ^:no-doc create-face
   "Creates a face with the specified `color`"
   [color]
@@ -21,41 +28,41 @@
 (defn front-face
   "Returns the front face of the `cube`"
   [cube]
-  (:front cube))
+  (front-face-key cube))
 
 (defn left-face
   "Returns the left face of the `cube`"
   [cube]
-  (:left cube))
+  (left-face-key cube))
 
 (defn right-face
   "Returns the right face of the `cube`"
   [cube]
-  (:right cube))
+  (right-face-key cube))
 
 (defn top-face
   "Returns the top face of the `cube`"
   [cube]
-  (:top cube))
+  (top-face-key cube))
 
 (defn bottom-face
   "Returns the bottom face of the `cube`"
   [cube]
-  (:bottom cube))
+  (bottom-face-key cube))
 
 (defn back-face
   "Returns the back face of the `cube`"
   [cube]
-  (:back cube))
+  (back-face-key cube))
 
 (def ^:private faces-startup-location
   "Where faces are placed on the cube at creation"
-  {:front blue,
-   :left red,
-   :right orange,
-   :top white,
-   :bottom yellow,
-   :back green})
+  {front-face-key blue,
+   left-face-key red,
+   right-face-key orange,
+   top-face-key white,
+   bottom-face-key yellow,
+   back-face-key green})
 
 (defn create-cube
   "Creates a solved cube"
@@ -106,29 +113,29 @@
 (defn rotate-left
   "Rotates the `cube` to the left"
   [cube]
-  (rotate-cube cube [:front :left :back :right]))
+  (rotate-cube cube [front-face-key left-face-key back-face-key right-face-key]))
 
 (defn rotate-right
   "Rotates the `cube` to the right"
   [cube]
-  (rotate-cube cube [:front :right :back :left]))
+  (rotate-cube cube [front-face-key right-face-key back-face-key left-face-key]))
 
 (defn rotate-up
   "Rotates the `cube` up"
   [cube]
-  (rotate-cube cube [:front :top :back :bottom]))
+  (rotate-cube cube [front-face-key top-face-key back-face-key bottom-face-key]))
 
 (defn rotate-down
   "Rotates the `cube` down"
   [cube]
-  (rotate-cube cube [:front :bottom :back :top]))
+  (rotate-cube cube [front-face-key bottom-face-key back-face-key top-face-key]))
 
 (defn rotate-clockwise
   "Rotates the `cube` clockwise"
   [cube]
-  (rotate-cube cube [:top :right :bottom :left]))
+  (rotate-cube cube [top-face-key right-face-key bottom-face-key left-face-key]))
 
 (defn rotate-anticlockwise
   "Rotates the `cube` anticlockwise"
   [cube]
-  (rotate-cube cube [:top :left :bottom :right]))
+  (rotate-cube cube [top-face-key left-face-key bottom-face-key right-face-key]))
