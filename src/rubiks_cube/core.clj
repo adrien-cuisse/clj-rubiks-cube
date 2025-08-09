@@ -157,24 +157,32 @@
      cube
      [0 1 2]))
 
-(defn rotate-top-slice-left
-  "Moves the top row of every face to the one on its left"
-  [cube]
+(defn- rotate-top-slice
+  "Applies a new color on the top row of each face of the `cube`
+  Target faces are the keys of `new-top-row-colors`, and the values the color
+  to apply"
+  [cube new-top-row-colors]
   (reduce
     #(paint-top-row %1 (first %2) (last %2))
     cube
-    (seq {left-face-key blue,
-          back-face-key red,
-          right-face-key green,
-          front-face-key orange})))
+    (seq new-top-row-colors)))
+
+(defn rotate-top-slice-left
+  "Moves the top row of every face to the one on its left"
+  [cube]
+  (rotate-top-slice
+    cube
+    {left-face-key blue,
+     back-face-key red,
+     right-face-key green,
+     front-face-key orange}))
 
 (defn rotate-top-slice-right
   "Moves the top row of every face to the one on its right"
   [cube]
-  (reduce
-    #(paint-top-row %1 (first %2) (last %2))
+  (rotate-top-slice
     cube
-    (seq {right-face-key blue,
-          back-face-key orange,
-          left-face-key green,
-          front-face-key red})))
+    {right-face-key blue,
+     back-face-key orange,
+     left-face-key green,
+     front-face-key red}))
