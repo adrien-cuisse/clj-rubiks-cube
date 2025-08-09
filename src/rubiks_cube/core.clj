@@ -162,4 +162,7 @@
   (reduce
     #(paint-top-row %1 (first %2) (last %2))
     cube
-    (seq {left-face-key blue, back-face-key red, right-face-key green})))
+    (seq {left-face-key blue,
+          back-face-key red,
+          right-face-key green,
+          front-face-key orange})))

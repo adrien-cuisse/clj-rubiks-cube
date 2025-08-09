@@ -169,4 +169,8 @@
   (it "moves the back face top row to the right face top row"
     (should=
       (top-row (back-face @cube))
-      (top-row (right-face @rotated-cube)))))
+      (top-row (right-face @rotated-cube))))
+  (it "moves the right face top row to the front face top row"
+    (should=
+      (top-row (right-face @cube))
+      (top-row (front-face @rotated-cube)))))
