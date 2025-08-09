@@ -172,17 +172,17 @@
   [cube]
   (rotate-top-slice
     cube
-    {left-face-key blue,
+    {front-face-key orange,
+     left-face-key blue,
      back-face-key red,
-     right-face-key green,
-     front-face-key orange}))
+     right-face-key green}))
 
 (defn rotate-top-slice-right
   "Moves the top row of every face to the one on its right"
   [cube]
   (rotate-top-slice
     cube
-    {right-face-key blue,
-     back-face-key orange,
+    {front-face-key red,
      left-face-key green,
-     front-face-key red}))
+     back-face-key orange,
+     right-face-key blue}))
