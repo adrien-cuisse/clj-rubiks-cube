@@ -79,7 +79,7 @@
       (vec (rest faces-cycle))
       (first faces-cycle))))
 
-(defn- ^:no-doc rotate
+(defn- ^:no-doc rotate-cube
   "Rotates the `cube` on itself, the first face will be replaced by the second
   one in `faces-cycle`, the second by the third, [...], the last by the first
 
@@ -96,29 +96,29 @@
 (defn rotate-left
   "Rotates the `cube` to the left"
   [cube]
-  (rotate cube [:front :left :back :right]))
+  (rotate-cube cube [:front :left :back :right]))
 
 (defn rotate-right
   "Rotates the `cube` to the right"
   [cube]
-  (rotate cube [:front :right :back :left]))
+  (rotate-cube cube [:front :right :back :left]))
 
 (defn rotate-up
   "Rotates the `cube` up"
   [cube]
-  (rotate cube [:front :top :back :bottom]))
+  (rotate-cube cube [:front :top :back :bottom]))
 
 (defn rotate-down
   "Rotates the `cube` down"
   [cube]
-  (rotate cube [:front :bottom :back :top]))
+  (rotate-cube cube [:front :bottom :back :top]))
 
 (defn rotate-clockwise
   "Rotates the `cube` clockwise"
   [cube]
-  (rotate cube [:top :right :bottom :left]))
+  (rotate-cube cube [:top :right :bottom :left]))
 
 (defn rotate-anticlockwise
   "Rotates the `cube` anticlockwise"
   [cube]
-  (rotate cube [:top :left :bottom :right]))
+  (rotate-cube cube [:top :left :bottom :right]))
