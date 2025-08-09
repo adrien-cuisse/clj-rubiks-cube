@@ -169,6 +169,7 @@
           front-face-key orange})))
 
 (defn rotate-top-slice-right
+  "Moves the top row of every face to the one on its right"
   [cube]
   (reduce
     #(paint-top-row %1 (first %2) (last %2))
