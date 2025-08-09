@@ -158,6 +158,7 @@
      [0 1 2]))
 
 (defn rotate-top-slice-left
+  "Moves the top row of every face to the one on its left"
   [cube]
   (reduce
     #(paint-top-row %1 (first %2) (last %2))
