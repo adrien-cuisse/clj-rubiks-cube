@@ -77,18 +77,36 @@
     (map #(create-face %) (vals faces-startup-location))))
 
 (defn- ^:no-doc rotate-coll-left
-  "Rotates a `collection` once to the left, moving the first element at the end
+  "Rotates a `collection` to the left, moving the first elements at the end
+  If shift-size isn't provided, it defaults to 1
   Returns a lazy sequence
 
   ```clojure
-  (rotate-coll-right [1 2 3]) ; => [2 3 1]
+  (rotate-coll-left [1 2 3]) ; => [2 3 1]
+  (rotate-coll-left [1 2 3] 2) ; => [3 1 2]
+  ```
+  "
+  ([coll]
+   (rotate-coll-left coll 1))
+  ([coll shift-size]
+   (->>
+     (cycle coll)
+     (drop shift-size)
+     (take (count coll)))))
+
+(defn- ^:no-doc rotate-coll-right
+  "Rotates a `collection` once to the right, moving the last element at the
+  beginning
+  Returns a lazy sequence
+
+  ```clojure
+  (rotate-coll-right [1 2 3]) ; => [3 1 2]
   ```
   "
   [coll]
-  (->>
-    (cycle coll)
-    (drop 1)
-    (take (count coll))))
+  (rotate-coll-left
+    coll
+    (dec (count coll))))
 
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`
@@ -159,23 +177,26 @@
 
 (defn- rotate-top-slice
   "Applies a new color on the top row of the front, right, back and left face
-  of the `cube` (in this order)
-  Applied colors are the ones in `new-colors`, in the same order"
-  [cube new-colors]
-  (reduce
-    #(paint-top-row %1 (first %2) (last %2))
-    cube
-    (seq
-      (zipmap
-        [front-face-key right-face-key back-face-key left-face-key]
-        new-colors))))
+  of the `cube`
+  Current colors are extracted, rotated by `f-rotation`, and applied again
+  "
+  [cube f-rotate-colors]
+  (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
+        new-colors (->> faces-cycle
+                     (mapv #(face cube %))
+                     (mapv #(color %))
+                     (f-rotate-colors))]
+    (reduce
+      #(paint-top-row %1 (first %2) (last %2))
+      cube
+      (seq (zipmap faces-cycle new-colors)))))
 
 (defn rotate-top-slice-left
   "Moves the top row of every face to the one on its left"
   [cube]
-  (rotate-top-slice cube [orange green red blue]))
+  (rotate-top-slice cube rotate-coll-left))
 
 (defn rotate-top-slice-right
   "Moves the top row of every face to the one on its right"
   [cube]
-  (rotate-top-slice cube [red blue orange green]))
+  (rotate-top-slice cube rotate-coll-right))
