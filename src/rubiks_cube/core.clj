@@ -189,21 +189,33 @@
     cube
     [3 4 5]))
 
-(defn- rotate-top-slice
-  "Applies a new color on the top row of the front, right, back and left face
+(defn- rotate-horizontal-slice
+  "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
-  Current colors are extracted, rotated by `f-rotation`, and applied again
+  Current colors are extracted, rotated by `f-rotation` taking a collection,
+  then colors are applied again by `f-paint-row, which should take the cube,
+  a face key and the new color
+  Returns the resulting cube
   "
-  [cube f-rotate-colors]
+  [cube f-rotate-colors f-paint-row]
   (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
         new-colors (->> faces-cycle
                      (mapv #(face cube %))
                      (mapv #(color %))
                      (f-rotate-colors))]
     (reduce
-      #(paint-top-row %1 (first %2) (last %2))
+      #(f-paint-row %1 (first %2) (last %2))
       cube
       (seq (zipmap faces-cycle new-colors)))))
+
+(defn- rotate-top-slice
+  "Applies a new color on the top row of the front, right, back and left face
+  of the `cube`
+  Current colors are extracted, rotated by `f-rotation` taking a collection,
+  then colors are applied again
+  "
+  [cube f-rotate-colors]
+  (rotate-horizontal-slice cube f-rotate-colors paint-top-row))
 
 (defn rotate-top-slice-left
   "Moves the top row of every face to the one on its left"
@@ -218,18 +230,11 @@
 (defn- rotate-equator-slice
   "Applies a new color on the equator row of the front, right, back and left face
   of the `cube`
-  Current colors are extracted, rotated by `f-rotation`, and applied again
+  Current colors are extracted, rotated by `f-rotation` taking a collection,
+  then colors are applied again
   "
   [cube f-rotate-colors]
-  (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
-        new-colors (->> faces-cycle
-                     (mapv #(face cube %))
-                     (mapv #(color %))
-                     (f-rotate-colors))]
-    (reduce
-      #(paint-equator-row %1 (first %2) (last %2))
-      cube
-      (seq (zipmap faces-cycle new-colors)))))
+  (rotate-horizontal-slice cube f-rotate-colors paint-equator-row))
 
 (defn rotate-equator-slice-left
   "Moves the equator row of every face to the one on its left"
