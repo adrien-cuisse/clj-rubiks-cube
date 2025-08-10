@@ -227,3 +227,16 @@
       #(paint-equator-row %1 (first %2) (last %2))
       cube
       (seq (zipmap faces-cycle new-colors)))))
+
+(defn rotate-equator-slice-right
+  "Moves the equator row of every face to the one on its right"
+  [cube]
+  (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
+        new-colors (->> faces-cycle
+                     (mapv #(face cube %))
+                     (mapv #(color %))
+                     (rotate-coll-right))]
+    (reduce
+      #(paint-equator-row %1 (first %2) (last %2))
+      cube
+      (seq (zipmap faces-cycle new-colors)))))
