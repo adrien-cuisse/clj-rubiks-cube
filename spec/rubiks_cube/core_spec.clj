@@ -195,3 +195,24 @@
     (should=
       (top-row (left-face @cube))
       (top-row (front-face @rotated-cube)))))
+
+(describe "equator slice left rotation"
+  (with cube (create-cube))
+  (with rotated-cube (rotate-equator-slice-left @cube))
+
+  (it "moves the front face equator row to the left face equator row"
+    (should=
+      (equator-row (front-face @cube))
+      (equator-row (left-face @rotated-cube))))
+  (it "moves the left face equator row to the back face equator row"
+    (should=
+      (equator-row (left-face @cube))
+      (equator-row (back-face @rotated-cube))))
+  (it "moves the back face equator row to the right face equator row"
+    (should=
+      (equator-row (back-face @cube))
+      (equator-row (right-face @rotated-cube))))
+  (it "moves the right face equator row to the front face equator row"
+    (should=
+      (equator-row (right-face @cube))
+      (equator-row (front-face @rotated-cube)))))

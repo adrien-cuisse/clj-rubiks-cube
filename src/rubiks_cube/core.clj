@@ -164,8 +164,14 @@
   (rotate-cube cube [top-face-key left-face-key bottom-face-key right-face-key]))
 
 (defn top-row
+  "Returns the top row of the `face`"
   [face]
   (subvec face 0 3))
+
+(defn equator-row
+  "Returns the equator row of the `face`"
+  [face]
+  (subvec face 3 6))
 
 (defn- paint-top-row
   "Changes the color of the top row to `color`, on the face with key `face-key`"
@@ -174,6 +180,14 @@
      #(assoc-in %1 [face-key %2] color)
      cube
      [0 1 2]))
+
+(defn- paint-equator-row
+  "Changes the color of the equator row to `color`, on the face with key `face-key`"
+  [cube face-key color]
+  (reduce
+    #(assoc-in %1 [face-key %2] color)
+    cube
+    [3 4 5]))
 
 (defn- rotate-top-slice
   "Applies a new color on the top row of the front, right, back and left face
@@ -200,3 +214,16 @@
   "Moves the top row of every face to the one on its right"
   [cube]
   (rotate-top-slice cube rotate-coll-right))
+
+(defn rotate-equator-slice-left
+  "Moves the equator row of every face to the one on its left"
+  [cube]
+  (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
+        new-colors (->> faces-cycle
+                     (mapv #(face cube %))
+                     (mapv #(color %))
+                     (rotate-coll-left))]
+    (reduce
+      #(paint-equator-row %1 (first %2) (last %2))
+      cube
+      (seq (zipmap faces-cycle new-colors)))))
