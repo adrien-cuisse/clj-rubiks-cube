@@ -158,7 +158,7 @@
      [0 1 2]))
 
 (defn- rotate-top-slice
-  "Applies a new color on the top row of the front, left, back and right face
+  "Applies a new color on the top row of the front, right, back and left face
   of the `cube` (in this order)
   Applied colors are the ones in `new-colors`, in the same order"
   [cube new-colors]
@@ -167,15 +167,15 @@
     cube
     (seq
       (zipmap
-        [front-face-key left-face-key back-face-key right-face-key]
+        [front-face-key right-face-key back-face-key left-face-key]
         new-colors))))
 
 (defn rotate-top-slice-left
   "Moves the top row of every face to the one on its left"
   [cube]
-  (rotate-top-slice cube [orange blue red green]))
+  (rotate-top-slice cube [orange green red blue]))
 
 (defn rotate-top-slice-right
   "Moves the top row of every face to the one on its right"
   [cube]
-  (rotate-top-slice cube [red green orange blue]))
+  (rotate-top-slice cube [red blue orange green]))
