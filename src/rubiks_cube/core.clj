@@ -173,23 +173,27 @@
   [face]
   (subvec face 3 6))
 
+(defn- paint-row
+  "Changes the color of a row to `color`, on the `face` with key `face-key`
+  The row is defined by the `cells-key` on that face
+  "
+  [cube face-key color cells-key]
+  (reduce
+    #(assoc-in %1 [face-key %2] color)
+    cube
+    cells-key))
+
 (defn- paint-top-row
   "Changes the color of the top row to `color`, on the face with
   key `face-key`"
   [cube face-key color]
-  (reduce
-     #(assoc-in %1 [face-key %2] color)
-     cube
-     [0 1 2]))
+  (paint-row cube face-key color [0 1 2]))
 
 (defn- paint-equator-row
   "Changes the color of the equator row to `color`, on the face with
   key `face-key`"
   [cube face-key color]
-  (reduce
-    #(assoc-in %1 [face-key %2] color)
-    cube
-    [3 4 5]))
+  (paint-row cube face-key color [3 4 5]))
 
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
