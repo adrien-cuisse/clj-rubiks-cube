@@ -1,5 +1,6 @@
 (ns rubiks-cube.core
-  (:require [clojure.set :refer [rename-keys]]))
+  (:require [clojure.set :refer [rename-keys]]
+            [rubiks-cube.collection :as coll]))
 
 (def blue \b)
 (def green \g)
@@ -76,38 +77,6 @@
     (keys faces-startup-location)
     (map #(create-face %) (vals faces-startup-location))))
 
-(defn- ^:no-doc rotate-coll-left
-  "Rotates a `collection` to the left, moving the first elements at the end
-  If shift-size isn't provided, it defaults to 1
-  Returns a lazy sequence
-
-  ```clojure
-  (rotate-coll-left [1 2 3]) ; => [2 3 1]
-  (rotate-coll-left [1 2 3] 2) ; => [3 1 2]
-  ```
-  "
-  ([coll]
-   (rotate-coll-left coll 1))
-  ([coll shift-size]
-   (->>
-     (cycle coll)
-     (drop shift-size)
-     (take (count coll)))))
-
-(defn- ^:no-doc rotate-coll-right
-  "Rotates a `collection` once to the right, moving the last element at the
-  beginning
-  Returns a lazy sequence
-
-  ```clojure
-  (rotate-coll-right [1 2 3]) ; => [3 1 2]
-  ```
-  "
-  [coll]
-  (rotate-coll-left
-    coll
-    (dec (count coll))))
-
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`
   Values in the map are the provided keys but rotated once to the right
@@ -117,7 +86,7 @@
   ```
   "
   [faces-cycle]
-  (zipmap faces-cycle (rotate-coll-left faces-cycle)))
+  (zipmap faces-cycle (coll/rotate-left faces-cycle)))
 
 (defn- ^:no-doc rotate-cube
   "Rotates the `cube` on itself, the first face will be replaced by the second
@@ -226,12 +195,12 @@
 (defn rotate-top-slice-left
   "Moves the top row of every face to the one on its left"
   [cube]
-  (rotate-top-slice cube rotate-coll-left))
+  (rotate-top-slice cube coll/rotate-left))
 
 (defn rotate-top-slice-right
   "Moves the top row of every face to the one on its right"
   [cube]
-  (rotate-top-slice cube rotate-coll-right))
+  (rotate-top-slice cube coll/rotate-right))
 
 (defn- rotate-equator-slice
   "Applies a new color on the equator row of the front, right, back and left face
@@ -245,9 +214,9 @@
 (defn rotate-equator-slice-left
   "Moves the equator row of every face to the one on its left"
   [cube]
-  (rotate-equator-slice cube rotate-coll-left))
+  (rotate-equator-slice cube coll/rotate-left))
 
 (defn rotate-equator-slice-right
   "Moves the equator row of every face to the one on its right"
   [cube]
-  (rotate-equator-slice cube rotate-coll-right))
+  (rotate-equator-slice cube coll/rotate-right))
