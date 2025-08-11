@@ -1,6 +1,7 @@
 (ns rubiks-cube.core
   (:require [clojure.set :refer [rename-keys]]
-            [rubiks-cube.collection :as coll]))
+            [rubiks-cube.collection :as coll]
+            [rubiks-cube.face :as face]))
 
 (def blue \b)
 (def green \g)
@@ -15,16 +16,6 @@
 (def ^:private right-face-key :right-face)
 (def ^:private top-face-key :top-face)
 (def ^:private bottom-face-key :bottom-face)
-
-(defn- ^:no-doc create-face
-  "Creates a face with the specified `color`"
-  [color]
-  (vec (repeat 9 color)))
-
-(defn color
-  "Returns the color of a `face`"
-  [face]
-  (nth face 4)) ; center cell can't move
 
 (defn- ^:no-doc face
   "Returns a `face` of the `cube` from its `key`"
@@ -75,7 +66,7 @@
   []
   (zipmap
     (keys faces-startup-location)
-    (map #(create-face %) (vals faces-startup-location))))
+    (map #(face/create %) (vals faces-startup-location))))
 
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`
@@ -132,37 +123,27 @@
   [cube]
   (rotate-cube cube [top-face-key left-face-key bottom-face-key right-face-key]))
 
-(defn top-row
-  "Returns the top row of the `face`"
-  [face]
-  (subvec face 0 3))
+  (defn- paint-row
+    "Changes the color of a row to `color`, on the `face` with key `face-key`
+    The row is defined by the `cells-key` on that face
+    "
+    [cube face-key color paint-row-fn]
+    (assoc-in
+      cube
+      [face-key]
+      (paint-row-fn (face cube face-key) color)))
 
-(defn equator-row
-  "Returns the equator row of the `face`"
-  [face]
-  (subvec face 3 6))
+  (defn- paint-top-row
+    "Changes the color of the top row to `color`, on the face with
+    key `face-key`"
+    [cube face-key color]
+    (paint-row cube face-key color face/paint-top-row))
 
-(defn- paint-row
-  "Changes the color of a row to `color`, on the `face` with key `face-key`
-  The row is defined by the `cells-key` on that face
-  "
-  [cube face-key color cells-key]
-  (reduce
-    #(assoc-in %1 [face-key %2] color)
-    cube
-    cells-key))
-
-(defn- paint-top-row
-  "Changes the color of the top row to `color`, on the face with
-  key `face-key`"
-  [cube face-key color]
-  (paint-row cube face-key color [0 1 2]))
-
-(defn- paint-equator-row
-  "Changes the color of the equator row to `color`, on the face with
-  key `face-key`"
-  [cube face-key color]
-  (paint-row cube face-key color [3 4 5]))
+  (defn- paint-equator-row
+    "Changes the color of the equator row to `color`, on the face with
+    key `face-key`"
+    [cube face-key color]
+    (paint-row cube face-key color face/paint-equator-row))
 
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
@@ -176,7 +157,7 @@
   (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
         new-colors (->> faces-cycle
                      (mapv #(face cube %))
-                     (mapv #(color %))
+                     (mapv #(face/color %))
                      (f-rotate-colors))]
     (reduce
       #(f-paint-row %1 (first %2) (last %2))
