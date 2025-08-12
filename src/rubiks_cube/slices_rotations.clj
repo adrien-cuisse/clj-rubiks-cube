@@ -1,5 +1,25 @@
 (in-ns 'rubiks-cube.core)
 
+(defn- paint-row
+  "Changes the `color` of a row, on the `face` targeted by `face-key`
+  The row is painted by calling `paint-row-fn`, which must match the key
+  "
+  [cube face-key color paint-row-fn]
+  (assoc-in
+    cube
+    [face-key]
+    (paint-row-fn (face cube face-key) color)))
+
+(defn- paint-top-row
+  "Changes the `color` of the top row, on the face targeted by `face-key`"
+  [cube face-key color]
+  (paint-row cube face-key color face/paint-top-row))
+
+(defn- paint-equator-row
+  "Changes the `color` of the equator row, on the face targeted by `face-key`"
+  [cube face-key color]
+  (paint-row cube face-key color face/paint-equator-row))
+
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`

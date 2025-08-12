@@ -17,8 +17,6 @@
 (def ^:private top-face-key :top-face)
 (def ^:private bottom-face-key :bottom-face)
 
-(load "rotations")
-
 (defn- ^:no-doc face
   "Returns a `face` of the `cube` from its `key`"
   [cube key]
@@ -70,24 +68,5 @@
     (keys faces-startup-location)
     (map #(face/create %) (vals faces-startup-location))))
 
-  (defn- paint-row
-    "Changes the `color` of a row, on the `face` targeted by `face-key`
-    The row is painted by calling `paint-row-fn`, which must match the key
-    "
-    [cube face-key color paint-row-fn]
-    (assoc-in
-      cube
-      [face-key]
-      (paint-row-fn (face cube face-key) color)))
-
-  (defn- paint-top-row
-    "Changes the `color` of the top row, on the face targeted by `face-key`"
-    [cube face-key color]
-    (paint-row cube face-key color face/paint-top-row))
-
-  (defn- paint-equator-row
-    "Changes the `color` of the equator row, on the face targeted by `face-key`"
-    [cube face-key color]
-    (paint-row cube face-key color face/paint-equator-row))
-
+(load "rotations")
 (load "slices_rotations")
