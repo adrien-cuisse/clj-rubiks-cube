@@ -93,18 +93,18 @@
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
-  Current colors are extracted, rotated by `f-rotation` taking a collection,
-  then colors are applied again by `f-paint-row, which should take the cube,
-  a face key and the new color
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again by `paint-row-fn`, which should
+  take the cube, a face key and the new color
   "
-  [cube f-rotate-colors f-paint-row]
+  [cube rotate-colors-fn paint-row-fn]
   (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
         new-colors (->> faces-cycle
                      (mapv #(face cube %))
                      (mapv #(face/color %))
-                     (f-rotate-colors))]
+                     (rotate-colors-fn))]
     (reduce
-      #(f-paint-row %1 (first %2) (last %2))
+      #(paint-row-fn %1 (first %2) (last %2))
       cube
       (seq (zipmap faces-cycle new-colors)))))
 
@@ -114,8 +114,8 @@
   Current colors are extracted, rotated by `f-rotation` taking a collection,
   then colors are applied again
   "
-  [cube f-rotate-colors]
-  (rotate-horizontal-slice cube f-rotate-colors paint-top-row))
+  [cube rotate-colors-fn]
+  (rotate-horizontal-slice cube rotate-colors-fn paint-top-row))
 
 (defn rotate-top-slice-left
   "Moves the top row of every face to the one on its left"
@@ -130,11 +130,11 @@
 (defn- rotate-equator-slice
   "Applies a new color on the equator row of the front, right, back and left face
   of the `cube`
-  Current colors are extracted, rotated by `f-rotation` taking a collection,
-  then colors are applied again
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again
   "
-  [cube f-rotate-colors]
-  (rotate-horizontal-slice cube f-rotate-colors paint-equator-row))
+  [cube rotate-colors-fn]
+  (rotate-horizontal-slice cube rotate-colors-fn paint-equator-row))
 
 (defn rotate-equator-slice-left
   "Moves the equator row of every face to the one on its left"
