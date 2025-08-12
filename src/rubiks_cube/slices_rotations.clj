@@ -11,7 +11,7 @@
   (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
         new-colors (->> faces-cycle
                      (mapv #(face cube %))
-                     (mapv #(face/color %))
+                     (mapv face/color)
                      (rotate-colors-fn))]
     (reduce
       #(paint-row-fn %1 (first %2) (last %2))
