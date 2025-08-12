@@ -17,6 +17,8 @@
 (def ^:private top-face-key :top-face)
 (def ^:private bottom-face-key :bottom-face)
 
+(load "rotations")
+
 (defn- ^:no-doc face
   "Returns a `face` of the `cube` from its `key`"
   [cube key]
@@ -68,64 +70,9 @@
     (keys faces-startup-location)
     (map #(face/create %) (vals faces-startup-location))))
 
-(defn- ^:no-doc create-faces-switch-map
-  "Creates a map where keys are `source faces`, and values their `destination`
-  Values in the map are the provided keys but rotated once to the right
-
-  ```clojure
-  (create-faces-switch-map [a b c]) ; => {a b, b c, c a}
-  ```
-  "
-  [faces-cycle]
-  (zipmap faces-cycle (coll/rotate-left faces-cycle)))
-
-(defn- ^:no-doc rotate-cube
-  "Rotates the `cube` on itself, the first face will be replaced by the second
-  one in `faces-cycle`, the second by the third, [...], the last by the first
-
-  ```clojure
-  (def cube {:a [\\a], :b [\\b], :c [\\c], :d [\\d]})
-  (rotate cube [:a :b :d]) ; => {:a [d], :b [a], :c [c], :d [b]}
-  ```
-  "
-  [cube faces-cycle]
-  (rename-keys
-    cube
-    (create-faces-switch-map faces-cycle)))
-
-(defn rotate-left
-  "Rotates the `cube` to the left"
-  [cube]
-  (rotate-cube cube [front-face-key left-face-key back-face-key right-face-key]))
-
-(defn rotate-right
-  "Rotates the `cube` to the right"
-  [cube]
-  (rotate-cube cube [front-face-key right-face-key back-face-key left-face-key]))
-
-(defn rotate-up
-  "Rotates the `cube` up"
-  [cube]
-  (rotate-cube cube [front-face-key top-face-key back-face-key bottom-face-key]))
-
-(defn rotate-down
-  "Rotates the `cube` down"
-  [cube]
-  (rotate-cube cube [front-face-key bottom-face-key back-face-key top-face-key]))
-
-(defn rotate-clockwise
-  "Rotates the `cube` clockwise"
-  [cube]
-  (rotate-cube cube [top-face-key right-face-key bottom-face-key left-face-key]))
-
-(defn rotate-anticlockwise
-  "Rotates the `cube` anticlockwise"
-  [cube]
-  (rotate-cube cube [top-face-key left-face-key bottom-face-key right-face-key]))
-
   (defn- paint-row
-    "Changes the color of a row to `color`, on the `face` with key `face-key`
-    The row is defined by the `cells-key` on that face
+    "Changes the `color` of a row, on the `face` targeted by `face-key`
+    The row is painted by calling `paint-row-fn`, which must match the key
     "
     [cube face-key color paint-row-fn]
     (assoc-in
@@ -134,14 +81,12 @@
       (paint-row-fn (face cube face-key) color)))
 
   (defn- paint-top-row
-    "Changes the color of the top row to `color`, on the face with
-    key `face-key`"
+    "Changes the `color` of the top row, on the face targeted by `face-key`"
     [cube face-key color]
     (paint-row cube face-key color face/paint-top-row))
 
   (defn- paint-equator-row
-    "Changes the color of the equator row to `color`, on the face with
-    key `face-key`"
+    "Changes the `color` of the equator row, on the face targeted by `face-key`"
     [cube face-key color]
     (paint-row cube face-key color face/paint-equator-row))
 
@@ -151,7 +96,6 @@
   Current colors are extracted, rotated by `f-rotation` taking a collection,
   then colors are applied again by `f-paint-row, which should take the cube,
   a face key and the new color
-  Returns the resulting cube
   "
   [cube f-rotate-colors f-paint-row]
   (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
