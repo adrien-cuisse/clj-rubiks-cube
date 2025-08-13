@@ -1,6 +1,6 @@
 (in-ns 'rubiks-cube.cube)
 
-(require '[clojure.set :refer [rename-keys]]
+(require '[clojure.set :as set]
          '[rubiks-cube.collection :as coll])
 
 (defn- ^:no-doc create-faces-switch-map
@@ -24,7 +24,7 @@
   ```
   "
   [cube faces-cycle]
-  (rename-keys
+  (set/rename-keys
     cube
     (create-faces-switch-map faces-cycle)))
 
