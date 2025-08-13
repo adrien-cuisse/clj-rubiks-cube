@@ -43,8 +43,8 @@
 (defn- rotate-top-slice
   "Applies a new color on the top row of the front, right, back and left face
   of the `cube`
-  Current colors are extracted, rotated by `f-rotation` taking a collection,
-  then colors are applied again
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again
   "
   [cube rotate-colors-fn]
   (rotate-horizontal-slice cube rotate-colors-fn paint-top-row))
