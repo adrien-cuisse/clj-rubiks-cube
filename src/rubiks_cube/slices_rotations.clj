@@ -27,6 +27,21 @@
   [cube face-key color]
   (paint-row cube face-key color face/paint-bottom-row))
 
+(defn- paint-column
+  "Changes the `color` of a column, on the `face` targeted by `face-key`
+  The column is painted by calling `paint-column-fn`, which must match the key
+  "
+  [cube face-key color paint-column-fn]
+  (assoc-in
+    cube
+    [face-key]
+    (paint-column-fn (face cube face-key) color)))
+
+(defn- paint-left-column
+  "Changes the `color` of the left column, on the face targeted by `face-key`"
+  [cube face-key color]
+  (paint-column cube face-key color face/paint-left-column))
+
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
@@ -101,3 +116,36 @@
   "Moves the bottom row of every face to the one on its right"
   [cube]
   (rotate-bottom-slice cube coll/rotate-right))
+
+(defn- rotate-vertical-slice
+  "Applies a new color on a single column of the front, top, back and bottom
+  face of the `cube`
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again by `paint-column-fn`, which should
+  take the cube, a face key and the new color
+  "
+  [cube rotate-colors-fn paint-column-fn]
+  (let [faces-cycle [front-face-key top-face-key back-face-key bottom-face-key],
+        new-colors (->> faces-cycle
+                     (mapv #(face cube %))
+                     (mapv face/color)
+                     (rotate-colors-fn))]
+    (reduce
+      #(paint-column-fn %1 (first %2) (last %2))
+      cube
+      (seq (zipmap faces-cycle new-colors)))))
+
+(defn- rotate-left-slice
+  "Applies a new color on the left column of the front, top, back and bottom
+  face of the `cube`
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again
+  "
+  [cube rotate-colors-fn]
+  (rotate-vertical-slice cube rotate-colors-fn paint-left-column))
+
+(defn rotate-left-slice-up
+  "Moves the left column of every face to the one upwards"
+  [cube]
+  (rotate-left-slice cube identity))
+

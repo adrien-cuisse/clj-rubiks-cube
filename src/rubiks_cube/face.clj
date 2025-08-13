@@ -24,6 +24,14 @@
   "Returns the bottom row of the `face`"
   [face]
   (subvec face 6 9))
+(defn bottom-row
+  "Returns the bottom row of the `face`"
+  [face]
+  (subvec face 6 9))
+(defn left-column
+  "Returns the left column of the `face`"
+  [face]
+  (get face [0 3 6]))
 
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
@@ -52,3 +60,19 @@
   key `face-key`"
   [face color]
   (paint-row face color [6 7 8]))
+
+(defn- paint-column
+  "Changes the color of a column to `color`, on the `face` with key `face-key`
+  The column is defined by the `cells-key` on that face
+  "
+  [face color cells-key]
+  (reduce
+    #(assoc-in %1 [%2] color)
+    face
+    cells-key))
+
+(defn paint-left-column
+  "Changes the color of the left column to `color`, on the face with
+  key `face-key`"
+  [face color]
+  (paint-column face color [0 3 6]))
