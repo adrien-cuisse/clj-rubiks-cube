@@ -1,5 +1,6 @@
 (ns rubiks-cube.core-spec
   (:require [speclj.core :refer :all]
+            [rubiks-cube.color :refer :all]
             [rubiks-cube.face :refer :all]
             [rubiks-cube.core :refer :all]))
 

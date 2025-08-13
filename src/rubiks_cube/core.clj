@@ -3,12 +3,7 @@
             [rubiks-cube.collection :as coll]
             [rubiks-cube.face :as face]))
 
-(def blue \b)
-(def green \g)
-(def orange \o)
-(def red \r)
-(def white \w)
-(def yellow \y)
+(use '[rubiks-cube.color])
 
 (def ^:private front-face-key :front-face)
 (def ^:private back-face-key :back-face)
