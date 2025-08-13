@@ -10,28 +10,31 @@
   [face]
   (nth face 4)) ; center cell can't move
 
+(defn- span
+  "Returns a span of the `face`, being a row or a column
+  The span is defined by the `cells-key`"
+  [face cells-key]
+  (get face cells-key))
+
 (defn top-row
   "Returns the top row of the `face`"
   [face]
-  (subvec face 0 3))
+  (span face [0 1 2]))
 
 (defn equator-row
   "Returns the equator row of the `face`"
   [face]
-  (subvec face 3 6))
+  (span face [3 4 5]))
 
 (defn bottom-row
   "Returns the bottom row of the `face`"
   [face]
-  (subvec face 6 9))
-(defn bottom-row
-  "Returns the bottom row of the `face`"
-  [face]
-  (subvec face 6 9))
+  (span face [6 7 8]))
+
 (defn left-column
   "Returns the left column of the `face`"
   [face]
-  (get face [0 3 6]))
+  (span face [0 3 6]))
 
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
