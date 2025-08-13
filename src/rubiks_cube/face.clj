@@ -20,6 +20,11 @@
   [face]
   (subvec face 3 6))
 
+(defn bottom-row
+  "Returns the bottom row of the `face`"
+  [face]
+  (subvec face 6 9))
+
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
   The row is defined by the `cells-key` on that face
@@ -41,3 +46,9 @@
   key `face-key`"
   [face color]
   (paint-row face color [3 4 5]))
+
+(defn paint-bottom-row
+  "Changes the color of the bottom row to `color`, on the face with
+  key `face-key`"
+  [face color]
+  (paint-row face color [6 7 8]))

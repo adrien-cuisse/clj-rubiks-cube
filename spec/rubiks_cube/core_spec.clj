@@ -239,3 +239,45 @@
     (should=
       (face/equator-row (cube/left-face @cube))
       (face/equator-row (cube/front-face @rotated-cube)))))
+
+(describe "bottom slice left rotation"
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-bottom-slice-left @cube))
+
+  (it "moves the front face bottom row to the left face bottom row"
+    (should=
+      (face/bottom-row (cube/front-face @cube))
+      (face/bottom-row (cube/left-face @rotated-cube))))
+  (it "moves the left face bottom row to the back face bottom row"
+    (should=
+      (face/bottom-row (cube/left-face @cube))
+      (face/bottom-row (cube/back-face @rotated-cube))))
+  (it "moves the back face bottom row to the right face bottom row"
+    (should=
+      (face/bottom-row (cube/back-face @cube))
+      (face/bottom-row (cube/right-face @rotated-cube))))
+  (it "moves the right face bottom row to the front face bottom row"
+    (should=
+      (face/bottom-row (cube/right-face @cube))
+      (face/bottom-row (cube/front-face @rotated-cube)))))
+
+(describe "bottom slice right rotation"
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-bottom-slice-right @cube))
+
+  (it "moves the front face bottom row to the right face bottom row"
+    (should=
+      (face/bottom-row (cube/front-face @cube))
+      (face/bottom-row (cube/right-face @rotated-cube))))
+  (it "moves the right face bottom row to the back face bottom row"
+    (should=
+      (face/bottom-row (cube/right-face @cube))
+      (face/bottom-row (cube/back-face @rotated-cube))))
+  (it "moves the back face bottom row to the left face bottom row"
+    (should=
+      (face/bottom-row (cube/back-face @cube))
+      (face/bottom-row (cube/left-face @rotated-cube))))
+  (it "moves the left face bottom row to the front face bottom row"
+    (should=
+      (face/bottom-row (cube/left-face @cube))
+      (face/bottom-row (cube/front-face @rotated-cube)))))

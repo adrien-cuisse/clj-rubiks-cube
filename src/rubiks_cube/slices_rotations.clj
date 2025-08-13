@@ -22,6 +22,11 @@
   [cube face-key color]
   (paint-row cube face-key color face/paint-equator-row))
 
+(defn- paint-bottom-row
+  "Changes the `color` of the bottom row, on the face targeted by `face-key`"
+  [cube face-key color]
+  (paint-row cube face-key color face/paint-bottom-row))
+
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
@@ -77,3 +82,22 @@
   "Moves the equator row of every face to the one on its right"
   [cube]
   (rotate-equator-slice cube coll/rotate-right))
+
+(defn- rotate-bottom-slice
+  "Applies a new color on the bottom row of the front, right, back and left face
+  of the `cube`
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again
+  "
+  [cube rotate-colors-fn]
+  (rotate-horizontal-slice cube rotate-colors-fn paint-bottom-row))
+
+(defn rotate-bottom-slice-left
+  "Moves the bottom row of every face to the one on its left"
+  [cube]
+  (rotate-bottom-slice cube coll/rotate-left))
+
+(defn rotate-bottom-slice-right
+  "Moves the bottom row of every face to the one on its right"
+  [cube]
+  (rotate-bottom-slice cube coll/rotate-right))
