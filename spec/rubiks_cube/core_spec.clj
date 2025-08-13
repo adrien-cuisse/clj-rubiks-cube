@@ -1,241 +1,241 @@
 (ns rubiks-cube.core-spec
   (:require [speclj.core :refer :all]
             [rubiks-cube.color :refer :all]
-            [rubiks-cube.face :refer :all :exclude [create]]
-            [rubiks-cube.cube :refer :all]))
+            [rubiks-cube.face :as face]
+            [rubiks-cube.cube :as cube]))
 
 (describe "a cube"
-  (with cube (create-cube))
+  (with cube (cube/create))
   (it "has 6 faces"
     (should-have-count 6 @cube))
   (it "has 9 cells on front face"
-    (should-have-count 9 (front-face @cube)))
+    (should-have-count 9 (cube/front-face @cube)))
   (it "has 9 cells on left face"
-    (should-have-count 9 (left-face @cube)))
+    (should-have-count 9 (cube/left-face @cube)))
   (it "has 9 cells on right face"
-    (should-have-count 9 (right-face @cube)))
+    (should-have-count 9 (cube/right-face @cube)))
   (it "has 9 cells on top face"
-    (should-have-count 9 (top-face @cube)))
+    (should-have-count 9 (cube/top-face @cube)))
   (it "has 9 cells on bottom face"
-    (should-have-count 9 (bottom-face @cube)))
+    (should-have-count 9 (cube/bottom-face @cube)))
   (it "has 9 cells on back face"
-    (should-have-count 9 (back-face @cube))))
+    (should-have-count 9 (cube/back-face @cube))))
 
 (describe "new cube"
-  (with cube (create-cube))
+  (with cube (cube/create))
   (it "has blue face in front"
-    (should= blue (color (front-face @cube))))
+    (should= blue (face/color (cube/front-face @cube))))
   (it "has red face on the left"
-    (should= red (color (left-face @cube))))
+    (should= red (face/color (cube/left-face @cube))))
   (it "has orange face on the right"
-    (should= orange (color (right-face @cube))))
+    (should= orange (face/color (cube/right-face @cube))))
   (it "has white face on top"
-    (should= white (color (top-face @cube))))
+    (should= white (face/color (cube/top-face @cube))))
   (it "has yellow face at the bottom"
-    (should= yellow (color (bottom-face @cube))))
+    (should= yellow (face/color (cube/bottom-face @cube))))
   (it "has green face on the back"
-    (should= green (color (back-face @cube)))))
+    (should= green (face/color (cube/back-face @cube)))))
 
   (describe "cube left rotation"
-    (with cube (create-cube))
-    (with rotated-cube (rotate-left @cube))
+    (with cube (cube/create))
+    (with rotated-cube (cube/rotate-left @cube))
     (it "moves the front face to the left"
       (should=
-        (color (front-face @cube))
-        (color (left-face @rotated-cube))))
+        (face/color (cube/front-face @cube))
+        (face/color (cube/left-face @rotated-cube))))
     (it "moves the left face to the back"
       (should=
-        (color (left-face @cube))
-        (color (back-face @rotated-cube))))
+        (face/color (cube/left-face @cube))
+        (face/color (cube/back-face @rotated-cube))))
     (it "moves the back face to the right"
       (should=
-        (color (back-face @cube))
-        (color (right-face @rotated-cube))))
+        (face/color (cube/back-face @cube))
+        (face/color (cube/right-face @rotated-cube))))
     (it "moves the right face to the front"
       (should=
-        (color (right-face @cube))
-        (color (front-face @rotated-cube)))))
+        (face/color (cube/right-face @cube))
+        (face/color (cube/front-face @rotated-cube)))))
 
 (describe "cube right rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-right @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-right @cube))
   (it "moves the front face to the right"
     (should=
-      (color (front-face @cube))
-      (color (right-face @rotated-cube))))
+      (face/color (cube/front-face @cube))
+      (face/color (cube/right-face @rotated-cube))))
   (it "moves the right face to the back"
     (should=
-      (color (right-face @cube))
-      (color (back-face @rotated-cube))))
+      (face/color (cube/right-face @cube))
+      (face/color (cube/back-face @rotated-cube))))
   (it "moves the back face to the left"
     (should=
-      (color (back-face @cube))
-      (color (left-face @rotated-cube))))
+      (face/color (cube/back-face @cube))
+      (face/color (cube/left-face @rotated-cube))))
   (it "moves the left face to the front"
     (should=
-      (color (left-face @cube))
-      (color (front-face @rotated-cube)))))
+      (face/color (cube/left-face @cube))
+      (face/color (cube/front-face @rotated-cube)))))
 
 (describe "cube up rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-up @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-up @cube))
     (it "moves the front face to the top"
       (should=
-        (color (front-face @cube))
-        (color (top-face @rotated-cube))))
+        (face/color (cube/front-face @cube))
+        (face/color (cube/top-face @rotated-cube))))
     (it "moves the top face to the back"
       (should=
-        (color (top-face @cube))
-        (color (back-face @rotated-cube))))
+        (face/color (cube/top-face @cube))
+        (face/color (cube/back-face @rotated-cube))))
     (it "moves the back face to the bottom"
       (should=
-        (color (back-face @cube))
-        (color (bottom-face @rotated-cube))))
+        (face/color (cube/back-face @cube))
+        (face/color (cube/bottom-face @rotated-cube))))
     (it "moves the bottom face to the front"
       (should=
-        (color (bottom-face @cube))
-        (color (front-face @rotated-cube)))))
+        (face/color (cube/bottom-face @cube))
+        (face/color (cube/front-face @rotated-cube)))))
 
 (describe "cube down rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-down @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-down @cube))
   (it "moves the front face to the bottom"
     (should=
-      (color (front-face @cube))
-      (color (bottom-face @rotated-cube))))
+      (face/color (cube/front-face @cube))
+      (face/color (cube/bottom-face @rotated-cube))))
   (it "moves the bottom face to the back"
     (should=
-      (color (bottom-face @cube))
-      (color (back-face @rotated-cube))))
+      (face/color (cube/bottom-face @cube))
+      (face/color (cube/back-face @rotated-cube))))
   (it "moves the back face to the top"
     (should=
-      (color (back-face @cube))
-      (color (top-face @rotated-cube))))
+      (face/color (cube/back-face @cube))
+      (face/color (cube/top-face @rotated-cube))))
   (it "moves the top face to the front"
     (should=
-      (color (top-face @cube))
-      (color (front-face @rotated-cube)))))
+      (face/color (cube/top-face @cube))
+      (face/color (cube/front-face @rotated-cube)))))
 
 (describe "cube clockwise rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-clockwise @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-clockwise @cube))
   (it "moves the top face to the right"
     (should=
-      (color (top-face @cube))
-      (color (right-face @rotated-cube))))
+      (face/color (cube/top-face @cube))
+      (face/color (cube/right-face @rotated-cube))))
   (it "moves the right face to the bottom"
     (should=
-      (color (right-face @cube))
-      (color (bottom-face @rotated-cube))))
+      (face/color (cube/right-face @cube))
+      (face/color (cube/bottom-face @rotated-cube))))
   (it "moves the bottom face to the left"
     (should=
-      (color (bottom-face @cube))
-      (color (left-face @rotated-cube))))
+      (face/color (cube/bottom-face @cube))
+      (face/color (cube/left-face @rotated-cube))))
   (it "moves the left face to the top"
     (should=
-      (color (left-face @cube))
-      (color (top-face @rotated-cube)))))
+      (face/color (cube/left-face @cube))
+      (face/color (cube/top-face @rotated-cube)))))
 
 (describe "cube anticlockwise rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-anticlockwise @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-anticlockwise @cube))
   (it "moves the top face to the left"
     (should=
-      (color (top-face @cube))
-      (color (left-face @rotated-cube))))
+      (face/color (cube/top-face @cube))
+      (face/color (cube/left-face @rotated-cube))))
   (it "moves the left face to the bottom"
     (should=
-      (color (left-face @cube))
-      (color (bottom-face @rotated-cube))))
+      (face/color (cube/left-face @cube))
+      (face/color (cube/bottom-face @rotated-cube))))
   (it "moves the bottom face to the right"
     (should=
-      (color (bottom-face @cube))
-      (color (right-face @rotated-cube))))
+      (face/color (cube/bottom-face @cube))
+      (face/color (cube/right-face @rotated-cube))))
   (it "moves the right face to the top"
     (should=
-      (color (right-face @cube))
-      (color (top-face @rotated-cube)))))
+      (face/color (cube/right-face @cube))
+      (face/color (cube/top-face @rotated-cube)))))
 
 (describe "top slice left rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-top-slice-left @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-top-slice-left @cube))
 
   (it "moves the front face top row to the left face top row"
     (should=
-      (top-row (front-face @cube))
-      (top-row (left-face @rotated-cube))))
+      (face/top-row (cube/front-face @cube))
+      (face/top-row (cube/left-face @rotated-cube))))
   (it "moves the left face top row to the back face top row"
     (should=
-      (top-row (left-face @cube))
-      (top-row (back-face @rotated-cube))))
+      (face/top-row (cube/left-face @cube))
+      (face/top-row (cube/back-face @rotated-cube))))
   (it "moves the back face top row to the right face top row"
     (should=
-      (top-row (back-face @cube))
-      (top-row (right-face @rotated-cube))))
+      (face/top-row (cube/back-face @cube))
+      (face/top-row (cube/right-face @rotated-cube))))
   (it "moves the right face top row to the front face top row"
     (should=
-      (top-row (right-face @cube))
-      (top-row (front-face @rotated-cube)))))
+      (face/top-row (cube/right-face @cube))
+      (face/top-row (cube/front-face @rotated-cube)))))
 
 (describe "top slice right rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-top-slice-right @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-top-slice-right @cube))
 
   (it "moves the front face top row to the right face top row"
     (should=
-      (top-row (front-face @cube))
-      (top-row (right-face @rotated-cube))))
+      (face/top-row (cube/front-face @cube))
+      (face/top-row (cube/right-face @rotated-cube))))
   (it "moves the right face top row to the back face top row"
     (should=
-      (top-row (right-face @cube))
-      (top-row (back-face @rotated-cube))))
+      (face/top-row (cube/right-face @cube))
+      (face/top-row (cube/back-face @rotated-cube))))
   (it "moves the back face top row to the left face top row"
     (should=
-      (top-row (back-face @cube))
-      (top-row (left-face @rotated-cube))))
+      (face/top-row (cube/back-face @cube))
+      (face/top-row (cube/left-face @rotated-cube))))
   (it "moves the left face top row to the front face top row"
     (should=
-      (top-row (left-face @cube))
-      (top-row (front-face @rotated-cube)))))
+      (face/top-row (cube/left-face @cube))
+      (face/top-row (cube/front-face @rotated-cube)))))
 
 (describe "equator slice left rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-equator-slice-left @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-equator-slice-left @cube))
 
   (it "moves the front face equator row to the left face equator row"
     (should=
-      (equator-row (front-face @cube))
-      (equator-row (left-face @rotated-cube))))
+      (face/equator-row (cube/front-face @cube))
+      (face/equator-row (cube/left-face @rotated-cube))))
   (it "moves the left face equator row to the back face equator row"
     (should=
-      (equator-row (left-face @cube))
-      (equator-row (back-face @rotated-cube))))
+      (face/equator-row (cube/left-face @cube))
+      (face/equator-row (cube/back-face @rotated-cube))))
   (it "moves the back face equator row to the right face equator row"
     (should=
-      (equator-row (back-face @cube))
-      (equator-row (right-face @rotated-cube))))
+      (face/equator-row (cube/back-face @cube))
+      (face/equator-row (cube/right-face @rotated-cube))))
   (it "moves the right face equator row to the front face equator row"
     (should=
-      (equator-row (right-face @cube))
-      (equator-row (front-face @rotated-cube)))))
+      (face/equator-row (cube/right-face @cube))
+      (face/equator-row (cube/front-face @rotated-cube)))))
 
 (describe "equator slice right rotation"
-  (with cube (create-cube))
-  (with rotated-cube (rotate-equator-slice-right @cube))
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-equator-slice-right @cube))
 
   (it "moves the front face equator row to the right face equator row"
     (should=
-      (equator-row (front-face @cube))
-      (equator-row (right-face @rotated-cube))))
+      (face/equator-row (cube/front-face @cube))
+      (face/equator-row (cube/right-face @rotated-cube))))
   (it "moves the right face equator row to the back face equator row"
     (should=
-      (equator-row (right-face @cube))
-      (equator-row (back-face @rotated-cube))))
+      (face/equator-row (cube/right-face @cube))
+      (face/equator-row (cube/back-face @rotated-cube))))
   (it "moves the back face equator row to the left face equator row"
     (should=
-      (equator-row (back-face @cube))
-      (equator-row (left-face @rotated-cube))))
+      (face/equator-row (cube/back-face @cube))
+      (face/equator-row (cube/left-face @rotated-cube))))
   (it "moves the left face equator row to the front face equator row"
     (should=
-      (equator-row (left-face @cube))
-      (equator-row (front-face @rotated-cube)))))
+      (face/equator-row (cube/left-face @cube))
+      (face/equator-row (cube/front-face @rotated-cube)))))

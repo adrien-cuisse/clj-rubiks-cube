@@ -53,7 +53,7 @@
    bottom-face-key yellow,
    back-face-key green})
 
-(defn create-cube
+(defn create
   "Creates a solved cube"
   []
   (zipmap
