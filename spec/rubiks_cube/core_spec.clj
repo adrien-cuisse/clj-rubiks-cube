@@ -1,8 +1,8 @@
 (ns rubiks-cube.core-spec
   (:require [speclj.core :refer :all]
             [rubiks-cube.color :refer :all]
-            [rubiks-cube.face :refer :all]
-            [rubiks-cube.core :refer :all]))
+            [rubiks-cube.face :refer :all :exclude [create]]
+            [rubiks-cube.cube :refer :all]))
 
 (describe "a cube"
   (with cube (create-cube))

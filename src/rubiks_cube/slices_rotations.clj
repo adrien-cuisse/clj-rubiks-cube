@@ -1,4 +1,6 @@
-(in-ns 'rubiks-cube.core)
+(in-ns 'rubiks-cube.cube)
+
+(require '[rubiks-cube.face :as face])
 
 (defn- paint-row
   "Changes the `color` of a row, on the `face` targeted by `face-key`

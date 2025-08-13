@@ -1,4 +1,7 @@
-(in-ns 'rubiks-cube.core)
+(in-ns 'rubiks-cube.cube)
+
+(require '[clojure.set :refer [rename-keys]]
+         '[rubiks-cube.collection :as coll])
 
 (defn- ^:no-doc create-faces-switch-map
   "Creates a map where keys are `source faces`, and values their `destination`

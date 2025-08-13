@@ -1,9 +1,6 @@
-(ns rubiks-cube.core
-  (:require [clojure.set :refer [rename-keys]]
-            [rubiks-cube.collection :as coll]
+(ns rubiks-cube.cube
+  (:require [rubiks-cube.color :refer :all]
             [rubiks-cube.face :as face]))
-
-(use '[rubiks-cube.color])
 
 (def ^:private front-face-key :front-face)
 (def ^:private back-face-key :back-face)
