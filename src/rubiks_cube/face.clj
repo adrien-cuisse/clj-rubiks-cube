@@ -1,5 +1,10 @@
 (ns rubiks-cube.face)
 
+(def ^:private top-row-keys [0 1 2])
+(def ^:private equator-row-keys [3 4 5])
+(def ^:private bottom-row-keys [6 7 8])
+(def ^:private left-column-keys [0 3 6])
+
 (defn ^:no-doc create
   "Creates a face with the specified `color`"
   [color]
@@ -19,22 +24,22 @@
 (defn top-row
   "Returns the top row of the `face`"
   [face]
-  (span face [0 1 2]))
+  (span face top-row))
 
 (defn equator-row
   "Returns the equator row of the `face`"
   [face]
-  (span face [3 4 5]))
+  (span face equator-row-keys))
 
 (defn bottom-row
   "Returns the bottom row of the `face`"
   [face]
-  (span face [6 7 8]))
+  (span face bottom-row-keys))
 
 (defn left-column
   "Returns the left column of the `face`"
   [face]
-  (span face [0 3 6]))
+  (span face left-column-keys))
 
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
@@ -50,19 +55,19 @@
   "Changes the color of the top row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color [0 1 2]))
+  (paint-row face color top-row-keys))
 
 (defn paint-equator-row
   "Changes the color of the equator row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color [3 4 5]))
+  (paint-row face color equator-row-keys))
 
 (defn paint-bottom-row
   "Changes the color of the bottom row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color [6 7 8]))
+  (paint-row face color bottom-row-keys))
 
 (defn- paint-column
   "Changes the color of a column to `color`, on the `face` with key `face-key`
@@ -78,4 +83,4 @@
   "Changes the color of the left column to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-column face color [0 3 6]))
+  (paint-column face color left-column-keys))
