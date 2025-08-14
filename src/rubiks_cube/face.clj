@@ -53,9 +53,9 @@
   [face]
   (span face right-column-keys))
 
-(defn- paint-row
-  "Changes the color of a row to `color`, on the `face` with key `face-key`
-  The row is defined by the `cells-key` on that face
+(defn- paint-span
+  "Changes the color of a span to `color`, on the `face` with key `face-key`
+  The span is defined by the `cells-key` on that face
   "
   [face color cells-key]
   (reduce
@@ -67,44 +67,34 @@
   "Changes the color of the top row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color top-row-keys))
+  (paint-span face color top-row-keys))
 
 (defn paint-equator-row
   "Changes the color of the equator row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color equator-row-keys))
+  (paint-span face color equator-row-keys))
 
 (defn paint-bottom-row
   "Changes the color of the bottom row to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-row face color bottom-row-keys))
-
-(defn- paint-column
-  "Changes the color of a column to `color`, on the `face` with key `face-key`
-  The column is defined by the `cells-key` on that face
-  "
-  [face color cells-key]
-  (reduce
-    #(assoc-in %1 [%2] color)
-    face
-    cells-key))
+  (paint-span face color bottom-row-keys))
 
 (defn paint-left-column
   "Changes the color of the left column to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-column face color left-column-keys))
+  (paint-span face color left-column-keys))
 
 (defn paint-middle-column
   "Changes the color of the middle column to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-column face color middle-column-keys))
+  (paint-span face color middle-column-keys))
 
 (defn paint-right-column
   "Changes the color of the right column to `color`, on the face with
   key `face-key`"
   [face color]
-  (paint-column face color right-column-keys))
+  (paint-span face color right-column-keys))
