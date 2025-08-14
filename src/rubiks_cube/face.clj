@@ -19,7 +19,7 @@
   "Returns a span of the `face`, being a row or a column
   The span is defined by the `cells-key`"
   [face cells-key]
-  (get face cells-key))
+  (mapv face cells-key))
 
 (defn top-row
   "Returns the top row of the `face`"
