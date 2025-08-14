@@ -5,6 +5,7 @@
 (def ^:private bottom-row-keys [6 7 8])
 (def ^:private left-column-keys [0 3 6])
 (def ^:private middle-column-keys [1 4 7])
+(def ^:private right-column-keys [2 5 8])
 
 (defn ^:no-doc create
   "Creates a face with the specified `color`"
@@ -46,6 +47,11 @@
   "Returns the middle column of the `face`"
   [face]
   (span face middle-column-keys))
+
+(defn right-column
+  "Returns the right column of the `face`"
+  [face]
+  (span face right-column-keys))
 
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
@@ -96,3 +102,9 @@
   key `face-key`"
   [face color]
   (paint-column face color middle-column-keys))
+
+(defn paint-right-column
+  "Changes the color of the right column to `color`, on the face with
+  key `face-key`"
+  [face color]
+  (paint-column face color right-column-keys))

@@ -47,6 +47,11 @@
   [cube face-key color]
   (paint-column cube face-key color face/paint-middle-column))
 
+(defn- paint-right-column
+  "Changes the `color` of the right column, on the face targeted by `face-key`"
+  [cube face-key color]
+  (paint-column cube face-key color face/paint-right-column))
+
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
@@ -177,3 +182,17 @@
   "Moves the middle column of every face to the one downwards"
   [cube]
   (rotate-middle-slice cube coll/rotate-left))
+
+(defn- rotate-right-slice
+  "Applies a new color on the right column of the front, top, back and bottom
+  face of the `cube`
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again
+  "
+  [cube rotate-colors-fn]
+  (rotate-vertical-slice cube rotate-colors-fn paint-right-column))
+
+(defn rotate-right-slice-up
+  "Moves the right column of every face to the one upwards"
+  [cube]
+  (rotate-right-slice cube coll/rotate-right))
