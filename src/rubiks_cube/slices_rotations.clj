@@ -147,5 +147,4 @@
 (defn rotate-left-slice-up
   "Moves the left column of every face to the one upwards"
   [cube]
-  (rotate-left-slice cube identity))
-
+  (rotate-left-slice cube coll/rotate-right))
