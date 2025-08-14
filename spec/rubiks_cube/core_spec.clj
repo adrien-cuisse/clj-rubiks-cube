@@ -302,3 +302,24 @@
     (should=
       (face/left-column (cube/bottom-face @cube))
       (face/left-column (cube/front-face @rotated-cube)))))
+
+(describe "left slice down rotation"
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-left-slice-down @cube))
+
+  (it "moves the front face left column to the bottom face left column"
+    (should=
+      (face/left-column (cube/front-face @cube))
+      (face/left-column (cube/bottom-face @rotated-cube))))
+  (it "moves the bottom face left column to the back face left column"
+    (should=
+      (face/left-column (cube/bottom-face @cube))
+      (face/left-column (cube/back-face @rotated-cube))))
+  (it "moves the back face left column to the top face left column"
+    (should=
+      (face/left-column (cube/back-face @cube))
+      (face/left-column (cube/top-face @rotated-cube))))
+  (it "moves the top face left column to the front face left column"
+    (should=
+      (face/left-column (cube/top-face @cube))
+      (face/left-column (cube/front-face @rotated-cube)))))

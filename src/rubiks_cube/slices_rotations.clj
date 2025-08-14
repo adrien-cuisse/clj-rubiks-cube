@@ -148,3 +148,8 @@
   "Moves the left column of every face to the one upwards"
   [cube]
   (rotate-left-slice cube coll/rotate-right))
+
+(defn rotate-left-slice-down
+  "Moves the left column of every face to the one downwards"
+  [cube]
+  (rotate-left-slice cube coll/rotate-left))
