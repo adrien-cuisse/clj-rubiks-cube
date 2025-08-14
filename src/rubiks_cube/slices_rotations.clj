@@ -172,3 +172,8 @@
   "Moves the middle column of every face to the one upwards"
   [cube]
   (rotate-middle-slice cube coll/rotate-right))
+
+(defn rotate-middle-slice-down
+  "Moves the middle column of every face to the one downwards"
+  [cube]
+  (rotate-middle-slice cube coll/rotate-left))
