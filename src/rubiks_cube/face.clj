@@ -4,6 +4,7 @@
 (def ^:private equator-row-keys [3 4 5])
 (def ^:private bottom-row-keys [6 7 8])
 (def ^:private left-column-keys [0 3 6])
+(def ^:private middle-column-keys [1 4 7])
 
 (defn ^:no-doc create
   "Creates a face with the specified `color`"
@@ -40,6 +41,11 @@
   "Returns the left column of the `face`"
   [face]
   (span face left-column-keys))
+
+(defn middle-column
+  "Returns the middle column of the `face`"
+  [face]
+  (span face middle-column-keys))
 
 (defn- paint-row
   "Changes the color of a row to `color`, on the `face` with key `face-key`
@@ -84,3 +90,9 @@
   key `face-key`"
   [face color]
   (paint-column face color left-column-keys))
+
+(defn paint-middle-column
+  "Changes the color of the middle column to `color`, on the face with
+  key `face-key`"
+  [face color]
+  (paint-column face color middle-column-keys))

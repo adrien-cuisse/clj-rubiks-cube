@@ -323,3 +323,24 @@
     (should=
       (face/left-column (cube/top-face @cube))
       (face/left-column (cube/front-face @rotated-cube)))))
+
+(describe "middle slice up rotation"
+  (with cube (cube/create))
+  (with rotated-cube (cube/rotate-middle-slice-up @cube))
+
+  (it "moves the front face middle column to the top face middle column"
+    (should=
+      (face/middle-column (cube/front-face @cube))
+      (face/middle-column (cube/top-face @rotated-cube))))
+  (it "moves the top face middle column to the back face middle column"
+    (should=
+      (face/middle-column (cube/top-face @cube))
+      (face/middle-column (cube/back-face @rotated-cube))))
+  (it "moves the back face middle column to the bottom face middle column"
+    (should=
+      (face/middle-column (cube/back-face @cube))
+      (face/middle-column (cube/bottom-face @rotated-cube))))
+  (it "moves the bottom face middle column to the front face middle column"
+    (should=
+      (face/middle-column (cube/bottom-face @cube))
+      (face/middle-column (cube/front-face @rotated-cube)))))
