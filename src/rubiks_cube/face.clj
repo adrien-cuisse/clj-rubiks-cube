@@ -24,7 +24,7 @@
 (defn top-row
   "Returns the top row of the `face`"
   [face]
-  (span face top-row))
+  (span face top-row-keys))
 
 (defn equator-row
   "Returns the equator row of the `face`"
