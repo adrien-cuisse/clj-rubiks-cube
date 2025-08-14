@@ -2,55 +2,45 @@
 
 (require '[rubiks-cube.face :as face])
 
-(defn- paint-row
-  "Changes the `color` of a row, on the `face` targeted by `face-key`
-  The row is painted by calling `paint-row-fn`, which must match the key
+(defn- paint-span
+  "Changes the `color` of a span, on the `face` targeted by `face-key`
+  The span is painted by calling `paint-span-fn`, which must match the key
   "
-  [cube face-key color paint-row-fn]
+  [cube face-key color paint-span-fn]
   (assoc-in
     cube
     [face-key]
-    (paint-row-fn (face cube face-key) color)))
+    (paint-span-fn (face cube face-key) color)))
 
 (defn- paint-top-row
   "Changes the `color` of the top row, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-row cube face-key color face/paint-top-row))
+  (paint-span cube face-key color face/paint-top-row))
 
 (defn- paint-equator-row
   "Changes the `color` of the equator row, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-row cube face-key color face/paint-equator-row))
+  (paint-span cube face-key color face/paint-equator-row))
 
 (defn- paint-bottom-row
   "Changes the `color` of the bottom row, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-row cube face-key color face/paint-bottom-row))
-
-(defn- paint-column
-  "Changes the `color` of a column, on the `face` targeted by `face-key`
-  The column is painted by calling `paint-column-fn`, which must match the key
-  "
-  [cube face-key color paint-column-fn]
-  (assoc-in
-    cube
-    [face-key]
-    (paint-column-fn (face cube face-key) color)))
+  (paint-span cube face-key color face/paint-bottom-row))
 
 (defn- paint-left-column
   "Changes the `color` of the left column, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-column cube face-key color face/paint-left-column))
+  (paint-span cube face-key color face/paint-left-column))
 
 (defn- paint-middle-column
   "Changes the `color` of the middle column, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-column cube face-key color face/paint-middle-column))
+  (paint-span cube face-key color face/paint-middle-column))
 
 (defn- paint-right-column
   "Changes the `color` of the right column, on the face targeted by `face-key`"
   [cube face-key color]
-  (paint-column cube face-key color face/paint-right-column))
+  (paint-span cube face-key color face/paint-right-column))
 
 (defn- rotate-slice
   "Applies a new color on a single span on each face of the `cube` targeted by
