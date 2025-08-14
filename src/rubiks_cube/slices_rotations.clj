@@ -52,6 +52,23 @@
   [cube face-key color]
   (paint-column cube face-key color face/paint-right-column))
 
+(defn- rotate-slice
+  "Applies a new color on a single span on each face of the `cube` targeted by
+  a key in `faces-key`
+  Current colors are extracted, rotated by `rotate-colors-fn` taking a
+  collection, then colors are applied again by `paint-row-fn`, which should
+  take the cube, a face key and the new color
+  "
+  [cube rotate-colors-fn paint-span-fn faces-key]
+  (let [new-colors (->> faces-key
+                     (mapv #(face cube %))
+                     (mapv face/color)
+                     (rotate-colors-fn))]
+    (reduce
+      #(paint-span-fn %1 (first %2) (last %2))
+      cube
+      (seq (zipmap faces-key new-colors)))))
+
 (defn- rotate-horizontal-slice
   "Applies a new color on a single row of the front, right, back and left face
   of the `cube`
@@ -60,15 +77,11 @@
   take the cube, a face key and the new color
   "
   [cube rotate-colors-fn paint-row-fn]
-  (let [faces-cycle [front-face-key right-face-key back-face-key left-face-key],
-        new-colors (->> faces-cycle
-                     (mapv #(face cube %))
-                     (mapv face/color)
-                     (rotate-colors-fn))]
-    (reduce
-      #(paint-row-fn %1 (first %2) (last %2))
-      cube
-      (seq (zipmap faces-cycle new-colors)))))
+  (rotate-slice
+    cube
+    rotate-colors-fn
+    paint-row-fn
+    [front-face-key right-face-key back-face-key left-face-key]))
 
 (defn- rotate-top-slice
   "Applies a new color on the top row of the front, right, back and left face
@@ -135,15 +148,11 @@
   take the cube, a face key and the new color
   "
   [cube rotate-colors-fn paint-column-fn]
-  (let [faces-cycle [front-face-key top-face-key back-face-key bottom-face-key],
-        new-colors (->> faces-cycle
-                     (mapv #(face cube %))
-                     (mapv face/color)
-                     (rotate-colors-fn))]
-    (reduce
-      #(paint-column-fn %1 (first %2) (last %2))
-      cube
-      (seq (zipmap faces-cycle new-colors)))))
+  (rotate-slice
+    cube
+    rotate-colors-fn
+    paint-column-fn
+    [front-face-key top-face-key back-face-key bottom-face-key]))
 
 (defn- rotate-left-slice
   "Applies a new color on the left column of the front, top, back and bottom
